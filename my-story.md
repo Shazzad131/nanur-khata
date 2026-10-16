@@ -183,3 +183,133 @@ To https://github.com/Shazzad131/nanur-khata
 
 
  ### Task B: Simulate Mitu.
+
+ ![alt text](image-6.png)
+
+D:\etc\Ostad\DevOps\mitu-folder>git clone https://github.com/Shazzad131/nanur-khata.git mitu-folder
+Cloning into 'mitu-folder'...
+remote: Enumerating objects: 21, done.
+remote: Counting objects: 100% (21/21), done.
+remote: Compressing objects: 100% (13/13), done.
+remote: Total 21 (delta 2), reused 20 (delta 1), pack-reused 0 (from 0)
+Receiving objects: 100% (21/21), 139.56 KiB | 661.00 KiB/s, done.
+Resolving deltas: 100% (2/2), done.
+
+D:\etc\Ostad\DevOps\mitu-folder>cd mitu-folder
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>echo "# Chittagong Mezban" > chittagong-mezban.md
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git add chittagong-mezban.md
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git commit -m "Mitu: Add Chittagong Mezban recipe"
+[main 3e4b3ef] Mitu: Add Chittagong Mezban recipe
+ 1 file changed, 1 insertion(+)
+ create mode 100644 chittagong-mezban.md
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git push origin main
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 336 bytes | 84.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/Shazzad131/nanur-khata.git
+   6d5433a..3e4b3ef  main -> main
+
+
+ ### Task C & D: Fetch, Merge vs Pull.
+ ![alt text](image-7.png)
+ D:\etc\Ostad\DevOps\Assignment_2>git fetch origin
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (1/1), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 316 bytes | 17.00 KiB/s, done.
+From https://github.com/Shazzad131/nanur-khata
+   6d5433a..3e4b3ef  main       -> origin/main
+
+D:\etc\Ostad\DevOps\Assignment_2>git merge origin/main
+Updating 6d5433a..3e4b3ef
+Fast-forward
+ chittagong-mezban.md | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 chittagong-mezban.md
+
+ D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git pull origin main
+From https://github.com/Shazzad131/nanur-khata
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+
+
+### Question: What is the difference between fetch + merge and pull?
+ANS: git fetch downloads the latest changes from the remote repository without integrating/changing your current working files, whereas git pull is a shortcut that automatically runs git fetch followed by git merge to integrate the changes immediately.
+
+
+## Chapter 5  Half-Cooked Halua and Time Travel
+### Task A  Save the halua work with git stash, fix and commit the biryani, then git stash pop.
+![alt text](image-8.png)
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>echo "half-cooked halua instructions..." > halua.md
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git stash
+No local changes to save
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git add biryani.md
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git commit -m "Fix: Add cardamom to biryani"
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        halua.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git stash pop
+No stash entries found.
+
+### Task B: Moving and deleting files
+
+![alt text](image-9.png)
+
+### Task C & D: Time travel & inspecting commits
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git log --oneline
+3e4b3ef (HEAD -> main, origin/main, origin/HEAD) Mitu: Add Chittagong Mezban recipe
+6d5433a Add assignment documentation and screenshots
+6185754 Add traditional shemai recipe
+414f857 Add Eid biryani recipe
+0def227 Add initial bhapa pitha recipe with corrected gur amount
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git show <commit-SHA>
+The syntax of the command is incorrect.
+
+D:\etc\Ostad\DevOps\mitu-folder\mitu-folder>git show 414f857
+commit 414f857301a2e7ef0ad901f9b22a4adaa4e651a7
+Author: Md. Shazadul islam <shazzad.wfp@gmail.com>
+Date:   Fri Oct 16 21:50:20 2026 +0600
+
+    Add Eid biryani recipe
+
+diff --git a/biryani.md b/biryani.md
+new file mode 100644
+index 0000000..4cf3725
+--- /dev/null
++++ b/biryani.md
+@@ -0,0 +1 @@
++"# Eid Biryani"
+
+
+
+Answer: rebase and reset --hard rewrite history. On shared branches (like main), doing this disrupts your collaborators because their local histories will diverge violently from the remote branch history, causing severe sync issues.
+
+
+
+D:\etc\Ostad\DevOps\Assignment_2>git log --oneline --graph --all
+* 3e4b3ef (HEAD -> main, origin/main, origin/HEAD) Mitu: Add Chittagong Mezban recipe
+* 6d5433a Add assignment documentation and screenshots
+* 6185754 (eid-special) Add traditional shemai recipe
+* 414f857 Add Eid biryani recipe
+* 0def227 Add initial bhapa pitha recipe with corrected gur amount
